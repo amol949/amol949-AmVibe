@@ -92,6 +92,12 @@
     <input type="tel" id="phone" placeholder="Enter Phone Number" />
     <div id="recaptcha-container"></div>
     <button onclick="sendOTP()">Send OTP</button>
+    <h3>Login with Email</h3>
+<input type="email" id="email" placeholder="Enter email" />
+<input type="password" id="password" placeholder="Enter password" />
+<button onclick="emailLogin()">Login</button>
+<p>Don't have an account? <a href="#" onclick="emailSignUp()">Register here</a></p>
+    
 
     <input type="text" id="otp" placeholder="Enter OTP" style="display:none;" />
     <button onclick="verifyOTP()" style="display:none;" id="verifyBtn">Verify OTP</button>
