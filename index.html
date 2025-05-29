@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AMVibe Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0d0d0d;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-box {
+      background: #1a1a1a;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,255,180,0.2);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .login-box h2 {
+      text-align: center;
+      color: #00ffcc;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #333;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00ffcc;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background: #00ccaa;
+    }
+
+    .alt-login {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .alt-login button {
+      flex: 1;
+      background: #222;
+      color: white;
+      border: 1px solid #00ffcc;
+    }
+
+    .alt-login button:hover {
+      background: #00ffcc;
+      color: #000;
+    }
+
+    #recaptcha-container {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Login to AMVibe</h2>
+    <input type="tel" id="phone" placeholder="Enter Phone Number" />
+    <div id="recaptcha-container"></div>
+    <button onclick="sendOTP()">Send OTP</button>
+
+    <input type="text" id="otp" placeholder="Enter OTP" style="display:none;" />
+    <button onclick="verifyOTP()" style="display:none;" id="verifyBtn">Verify OTP</button>
+
+    <div class="alt-login">
+      <button onclick="googleLogin()">Google</button>
+      <button onclick="facebookLogin()">Facebook</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCfejacT-dzHSA7rRAFyrVYVnmQ3eW1fRM",
+      authDomain: "amvibe-56f84.firebaseapp.com",
+      databaseURL: "https://amvibe-56f84-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "amvibe-56f84",
+      storageBucket: "amvibe-56f84.appspot.com",
+      messagingSenderId: "791042962602",
+      appId: "1:791042962602:web:9df59ee1e093a866a04cd3"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    window.onload = function () {
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        'size': 'invisible'
+      });
+    };
+
+    function sendOTP() {
+      const phoneNumber = document.getElementById("phone").value;
+      const appVerifier = window.recaptchaVerifier;
+
+      auth.signInWithPhoneNumber("+91" + phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          document.getElementById("otp").style.display = "block";
+          document.getElementById("verifyBtn").style.display = "block";
+        }).catch((error) => {
+          alert(error.message);
+        });
+    }
+
+    function verifyOTP() {
+      const code = document.getElementById("otp").value;
+      window.confirmationResult.confirm(code).then((result) => {
+        alert("Login successful!");
+        // Redirect or open music app here
+      }).catch((error) => {
+        alert("Invalid OTP");
+      });
+    }
+
+    function googleLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider).then((result) => {
+        alert("Logged in with Google");
+      }).catch((error) => {
+        alert(error.message);
+      });
+    }
+
+    function facebookLogin() {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      auth.signInWithPopup(provider).then((result) => {
+        alert("Logged in with Facebook");
+      }).catch((error) => {
+        alert(error.message);
+      });
+    }
+  </script>
+  <script src="auth.js"></script>
+</body>
+</html>
