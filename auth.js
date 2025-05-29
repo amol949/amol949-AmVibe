@@ -46,4 +46,31 @@ document.getElementById('verifyOtp').onclick = () => {
       alert("Invalid OTP: " + error.message);
     });
 };
+function emailLogin() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      alert("Login Success!");
+      window.location.href = "songs.html";
+    })
+    .catch((error) => {
+      alert("Login Error: " + error.message);
+    });
+}
+
+function emailSignUp() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      alert("Account Created! Logged in.");
+      window.location.href = "songs.html";
+    })
+    .catch((error) => {
+      alert("Signup Error: " + error.message);
+    });
+}
 
