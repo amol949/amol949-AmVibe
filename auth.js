@@ -73,4 +73,44 @@ function emailSignUp() {
       alert("Signup Error: " + error.message);
     });
 }
+let confirmationResult;
+
+window.onload = function () {
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+    size: 'normal',
+    callback: function(response) {
+      console.log("reCAPTCHA Solved");
+    },
+    'expired-callback': function() {
+      alert("reCAPTCHA expired. Try again.");
+    }
+  });
+
+  recaptchaVerifier.render();
+};
+
+document.getElementById('sendOtp').onclick = function () {
+  const phoneNumber = document.getElementById('phoneNumber').value;
+  const appVerifier = window.recaptchaVerifier;
+
+  firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+    .then(function (result) {
+      confirmationResult = result;
+      alert("OTP Sent Successfully!");
+    }).catch(function (error) {
+      alert("Error sending OTP: " + error.message);
+    });
+};
+
+document.getElementById('verifyOtp').onclick = function () {
+  const otpCode = document.getElementById('otpCode').value;
+
+  confirmationResult.confirm(otpCode).then(function (result) {
+    alert("Phone Login Success!");
+    window.location.href = "songs.html";
+  }).catch(function (error) {
+    alert("Invalid OTP. Try again.");
+  });
+};
+
 
