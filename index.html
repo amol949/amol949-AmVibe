@@ -93,11 +93,19 @@
     <div id="recaptcha-container"></div>
     <button onclick="sendOTP()">Send OTP</button>
     <h3>Login with Email</h3>
-<input type="email" id="email" placeholder="Enter email" />
-<input type="password" id="password" placeholder="Enter password" />
-<button onclick="emailLogin()">Login</button>
-<p>Don't have an account? <a href="#" onclick="emailSignUp()">Register here</a></p>
+    <div class="otp-section">
+  <h3>Login with Phone (OTP)</h3>
+  <input type="text" id="phoneNumber" placeholder="+91XXXXXXXXXX" class="input-box" />
+  <div id="recaptcha-container"></div>
+  <button id="sendOtp" class="btn">Send OTP</button>
+
+  <br><br>
+  <input type="text" id="otpCode" placeholder="Enter OTP" class="input-box" />
+  <button id="verifyOtp" class="btn">Verify OTP</button>
+    </div>
     
+
+  
 
     <input type="text" id="otp" placeholder="Enter OTP" style="display:none;" />
     <button onclick="verifyOTP()" style="display:none;" id="verifyBtn">Verify OTP</button>
