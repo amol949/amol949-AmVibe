@@ -91,39 +91,4 @@ body {
   margin-bottom: 20px;
   border-radius: 12px;
 }
-.login-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px;
-  border: 2px solid #fff;
-  border-radius: 30px;
-  background-color: transparent;
-  color: #fff;
-  font-size: 16px;
-  margin-top: 10px;
-  width: 100%;
-  transition: 0.3s ease;
-}
-
-.login-btn img.icon {
-  width: 24px;
-  height: 24px;
-  background-color: #fff;
-  border-radius: 50%;
-  padding: 2px;
-}
-
-.login-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.login-btn.google {
-  border-color: #db4437;
-}
-
-.login-btn.facebook {
-  border-color: #4267B2;
-}
 
