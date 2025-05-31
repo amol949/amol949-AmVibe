@@ -47,5 +47,15 @@
   </div>
 
   <script src="auth.js"></script>
+  <!-- OTP Section -->
+<div id="otp-section" style="text-align:center; margin-top:20px;">
+  <input type="text" id="phoneInput" placeholder="+91XXXXXXXXXX" style="padding:10px; width:200px;"><br><br>
+  <div id="recaptcha-container"></div><br>
+  <button onclick="sendOTP()">Send OTP</button><br><br>
+
+  <input type="text" id="otpInput" placeholder="Enter OTP" style="padding:10px; width:200px;"><br><br>
+  <button onclick="verifyOTP()">Verify OTP</button>
+</div>
+  
 </body>
 </html>
