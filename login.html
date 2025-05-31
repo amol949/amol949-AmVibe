@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <title>Login to AMVibe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="auth.js" defer></script>
   <style>
     body {
-      background-color: #000;
-      color: white;
+      background: #000;
+      color: #fff;
       font-family: Arial, sans-serif;
       display: flex;
       align-items: center;
@@ -16,114 +19,71 @@
       margin: 0;
     }
     .login-box {
-      text-align: center;
       background: #111;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 20px #1ed760;
       width: 90%;
       max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 15px #1ed760;
     }
-    .login-box img {
-      width: 120px;
-      margin-bottom: 20px;
-    }
-    h2 {
-      margin-bottom: 20px;
-      color: #1ed760;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 25px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .main-btn {
-      background-color: #1ed760;
-      color: black;
-      font-weight: bold;
-    }
-    .google-btn, .fb-btn {
-      background-color: #282828;
-      color: white;
-      border: 1px solid #444;
-    }
-    .google-btn:hover, .fb-btn:hover {
-      background-color: #333;
-    }
-    .input-box {
-      display: none;
-      margin-top: 20px;
-      animation: fadeIn 0.5s ease-in-out;
-    }
+    h2 { color: #1ed760; margin-bottom: 20px; }
     input {
       width: 90%;
       padding: 10px;
-      margin: 5px auto;
+      margin: 8px 0;
       border: none;
       border-radius: 8px;
       background: #222;
       color: white;
     }
-    .link {
-      margin-top: 20px;
-      font-size: 14px;
+    button {
+      width: 90%;
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 25px;
+      background: #1ed760;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
     }
-    .link a {
-      color: #1ed760;
-      text-decoration: none;
+    #recaptcha-container {
+      margin: 10px 0;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
+    .form-section { display: none; }
   </style>
 </head>
 <body>
-
   <div class="login-box">
-    <img src="https://raw.githubusercontent.com/amol949/amol949-AmVibe/main/logo.png" alt="AmVibe Logo" />
     <h2>Login to AMVibe</h2>
+    <button onclick="toggleForm('emailForm')">Continue with Email</button>
+    <button onclick="toggleForm('phoneForm')">Continue with Phone</button>
+    <button onclick="loginWithGoogle()">Continue with Google</button>
 
-    <button class="main-btn" onclick="showEmailLogin()">Continue with Email</button>
-    <button class="google-btn" onclick="googleLogin()">Continue with Google</button>
-    <button class="fb-btn" onclick="facebookLogin()">Continue with Facebook</button>
-
-    <div id="emailLogin" class="input-box">
-      <input type="email" placeholder="Email" id="email">
-      <input type="password" placeholder="Password" id="password">
-      <button class="main-btn" onclick="emailLogin()">Login</button>
+    <!-- Email Login -->
+    <div id="emailForm" class="form-section">
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="loginWithEmail()">Login</button>
     </div>
 
-    <div class="link">Don't have an account? <a href="#">Sign up</a></div>
+    <!-- Phone Login -->
+    <div id="phoneForm" class="form-section">
+      <input type="text" id="phone" placeholder="Phone number (no +91)">
+      <div id="recaptcha-container"></div>
+      <button onclick="sendOTP()">Send OTP</button>
+      <input type="text" id="otp" placeholder="Enter OTP">
+      <button onclick="verifyOTP()">Verify OTP</button>
+    </div>
   </div>
 
   <script>
-    function showEmailLogin() {
-      const box = document.getElementById('emailLogin');
-      box.style.display = box.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function googleLogin() {
-      alert('Google Login coming soon');
-    }
-
-    function facebookLogin() {
-      alert('Facebook Login coming soon');
-    }
-
-    function emailLogin() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      alert("Email: " + email + "\nPassword: " + password);
-      // Firebase login logic तुम्ही नंतर इथे लावू शकता.
+    function toggleForm(formId) {
+      document.getElementById("emailForm").style.display = "none";
+      document.getElementById("phoneForm").style.display = "none";
+      document.getElementById(formId).style.display = "block";
     }
   </script>
-
 </body>
 </html>
