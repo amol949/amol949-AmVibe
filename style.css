@@ -92,10 +92,13 @@ body {
   border-radius: 12px;
 }
 .login-btn img.icon {
-  width: 20px;
-  height: 20px;
-  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  background-color: transparent; /* ✅ clear background */
+  border-radius: 50%;
+  padding: 0;
 }
+
 
 
 
