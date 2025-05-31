@@ -1,4 +1,3 @@
-// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCfejacT-dzHSA7rRAFyrVYVnmQ3eW1fRM",
   authDomain: "amvibe-56f84.firebaseapp.com",
@@ -8,10 +7,7 @@ const firebaseConfig = {
   appId: "1:791042962602:web:9df59ee1e093a866a04cd3"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// Email login
 function loginWithEmail() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -20,16 +16,13 @@ function loginWithEmail() {
     .then(() => alert("Email login successful!"))
     .catch(error => alert("Email login failed: " + error.message));
 }
-
-// Google login
 function loginWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider)
     .then(() => alert("Google login successful!"))
     .catch(error => alert("Google login failed: " + error.message));
 }
-
-// reCAPTCHA Setup
+// reCAPTCHA
 window.onload = function () {
   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
     size: 'normal',
@@ -57,7 +50,7 @@ function verifyOTP() {
 
   window.confirmationResult.confirm(otp)
     .then(result => {
-      alert("OTP verified! Welcome.");
+      alert("OTP verified!");
       window.location.href = "songs.html";
     })
     .catch(error => alert("Invalid OTP"));
