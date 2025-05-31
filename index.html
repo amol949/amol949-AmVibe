@@ -3,53 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login to AMVibe</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>AMVibe - Welcome</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
+      padding: 0;
       background-color: #000;
       color: #fff;
+      font-family: Arial, sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       height: 100vh;
-    }
-
-    .login-container {
-      background: #111;
-      padding: 30px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 15px #00ff88;
       text-align: center;
     }
 
     .logo {
-      width: 120px;
-      margin: 0 auto 20px;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 20px;
     }
 
-    .login-title {
+    h1 {
       font-size: 24px;
-      margin-bottom: 25px;
       font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #aaa;
+      margin-bottom: 30px;
     }
 
     .btn {
+      width: 80%;
+      max-width: 300px;
+      padding: 14px;
+      border-radius: 30px;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 10px 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      margin: 10px 0;
-      padding: 12px;
-      border: none;
-      border-radius: 30px;
-      font-size: 16px;
       cursor: pointer;
-      transition: 0.3s;
     }
 
     .btn img {
@@ -58,66 +58,57 @@
       margin-right: 10px;
     }
 
-    .email-btn {
+    .signup {
       background-color: #1ed760;
       color: #000;
     }
 
-    .phone-btn {
-      background-color: transparent;
+    .google {
+      background: transparent;
       border: 1px solid #888;
       color: #fff;
     }
 
-    .google-btn {
-      background-color: #fff;
-      color: #000;
+    .facebook {
+      background: transparent;
+      border: 1px solid #888;
+      color: #fff;
     }
 
-    .facebook-btn {
-      background-color: #f0f2f5;
-      color: #000;
-    }
-
-    .signup-link {
-      margin-top: 20px;
+    .bottom-text {
+      margin-top: 25px;
       font-size: 14px;
     }
 
-    .signup-link a {
+    .bottom-text a {
       color: #1ed760;
       text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <img src="logo.png" alt="AMVibe Logo" class="logo" />
-    <div class="login-title">Login to AMVibe</div>
 
-    <button class="btn email-btn">
-      <img src="https://img.icons8.com/fluency-systems-regular/48/000000/mail.png"/>
-      Continue with email
-    </button>
+  <!-- Replace with your own AMVibe logo -->
+  <img class="logo" src="https://raw.githubusercontent.com/amol949/amol949-AmVibe/main/logo.png" alt="AmVibe Logo"/>
 
-    <button class="btn phone-btn">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png"/>
-      Continue with phone number
-    </button>
+  <h1>Millions of songs.</h1>
+  <p>Free on AMVibe.</p>
 
-    <button class="btn google-btn">
-      <img src="https://img.icons8.com/color/48/000000/google-logo.png"/>
-      Continue with Google
-    </button>
+  <button class="btn signup">Sign up for free</button>
 
-    <button class="btn facebook-btn">
-      <img src="https://img.icons8.com/fluency/48/000000/facebook-new.png"/>
-      Continue with Facebook
-    </button>
+  <button class="btn google">
+    <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google Icon" />
+    Continue with Google
+  </button>
 
-    <div class="signup-link">
-      Don't have an account? <a href="#">Sign up</a>
-    </div>
+  <button class="btn facebook">
+    <img src="https://img.icons8.com/fluency/48/facebook-new.png" alt="Facebook Icon" />
+    Continue with Facebook
+  </button>
+
+  <div class="bottom-text">
+    Already have an account? <a href="login.html">Log in</a>
   </div>
+
 </body>
 </html>
