@@ -91,6 +91,41 @@ body {
   margin-bottom: 20px;
   border-radius: 12px;
 }
+.social-login {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  background-color: transparent;
+  color: #fff;
+  font-size: 16px;
+  width: 100%;
+  transition: 0.3s ease;
+}
+
+.login-btn img.icon {
+  width: 22px;
+  height: 22px;
+}
+
+.login-btn.google {
+  border-color: #db4437;
+}
+
+.login-btn.facebook {
+  border-color: #4267B2;
+}
+
 
 
 
