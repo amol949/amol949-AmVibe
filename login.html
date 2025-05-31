@@ -1,99 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Login to AMVibe</title>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-  <script src="auth.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      background: #000;
-      color: #fff;
+      background-color: #000;
+      color: white;
       font-family: Arial, sans-serif;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
       margin: 0;
     }
-
     .login-box {
+      text-align: center;
       background: #111;
       padding: 30px;
-      border-radius: 16px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #1ed760;
       width: 90%;
       max-width: 400px;
-      text-align: center;
-      box-shadow: 0 0 12px #1ed760;
     }
-
-    .login-box h1 {
+    .login-box img {
+      width: 120px;
       margin-bottom: 20px;
-      font-size: 24px;
+    }
+    h2 {
+      margin-bottom: 20px;
       color: #1ed760;
     }
-
-    input {
-      width: 90%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      background: #222;
-      color: #fff;
-      font-size: 16px;
-    }
-
     button {
-      padding: 12px 20px;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
       border: none;
       border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .main-btn {
       background-color: #1ed760;
       color: black;
       font-weight: bold;
-      cursor: pointer;
-      margin: 10px 0;
+    }
+    .google-btn, .fb-btn {
+      background-color: #282828;
+      color: white;
+      border: 1px solid #444;
+    }
+    .google-btn:hover, .fb-btn:hover {
+      background-color: #333;
+    }
+    .input-box {
+      display: none;
+      margin-top: 20px;
+    }
+    input {
       width: 90%;
+      padding: 10px;
+      margin: 5px auto;
+      border: none;
+      border-radius: 8px;
+      background: #222;
+      color: white;
     }
-
-    .social-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+    .link {
+      margin-top: 20px;
+      font-size: 14px;
     }
-
-    .social-btn img {
-      width: 20px;
-      height: 20px;
-    }
-
-    #recaptcha-container {
-      margin: 10px 0;
+    .link a {
+      color: #1ed760;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
+
   <div class="login-box">
-    <h1>Login to AMVibe</h1>
+    <img src="https://raw.githubusercontent.com/amol949/amol949-AmVibe/main/logo.png" alt="AmVibe Logo" />
+    <h2>Login to AMVibe</h2>
 
-    <!-- Email login -->
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="loginWithEmail()">Login with Email</button>
+    <button class="main-btn" onclick="showEmailLogin()">Continue with Email</button>
+    <button class="google-btn" onclick="googleLogin()">Continue with Google</button>
+    <button class="fb-btn" onclick="facebookLogin()">Continue with Facebook</button>
 
-    <!-- Google login -->
-    <button class="social-btn" onclick="loginWithGoogle()">
-      <img src="https://img.icons8.com/color/48/000000/google-logo.png"/> Continue with Google
-    </button>
+    <div id="emailLogin" class="input-box">
+      <input type="email" placeholder="Email">
+      <input type="password" placeholder="Password">
+      <button class="main-btn">Login</button>
+    </div>
 
-    <!-- Phone login -->
-    <input type="text" id="phone" placeholder="Phone (without +91)">
-    <div id="recaptcha-container"></div>
-    <button onclick="sendOTP()">Send OTP</button>
-    <input type="text" id="otp" placeholder="Enter OTP">
-    <button onclick="verifyOTP()">Verify OTP</button>
+    <div class="link">Don't have an account? <a href="#">Sign up</a></div>
   </div>
+
+  <script>
+    function showEmailLogin() {
+      document.getElementById('emailLogin').style.display = 'block';
+    }
+
+    function googleLogin() {
+      alert('Google Login coming soon');
+    }
+
+    function facebookLogin() {
+      alert('Facebook Login coming soon');
+    }
+  </script>
+
 </body>
 </html>
