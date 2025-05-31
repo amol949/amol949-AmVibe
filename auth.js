@@ -8,74 +8,57 @@ const firebaseConfig = {
   appId: "1:791042962602:web:9df59ee1e093a866a04cd3"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-// Show/hide sections
-function showEmailForm() {
-  document.getElementById('emailForm').classList.remove('hidden');
-  document.getElementById('phoneForm').classList.add('hidden');
-}
-function showPhoneForm() {
-  document.getElementById('phoneForm').classList.remove('hidden');
-  document.getElementById('emailForm').classList.add('hidden');
-}
 
 // Email login
-function emailLogin() {
-  const email = document.getElementById('emailInput').value;
-  const password = document.getElementById('passwordInput').value;
+function loginWithEmail() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  auth.signInWithEmailAndPassword(email, password)
-    .then(user => alert("Login Success!"))
-    .catch(error => alert("Login Error: " + error.message));
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(() => alert("Email login successful!"))
+    .catch(error => alert("Email login failed: " + error.message));
 }
 
-// OTP login
+// Google login
+function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then(() => alert("Google login successful!"))
+    .catch(error => alert("Google login failed: " + error.message));
+}
+
+// reCAPTCHA Setup
 window.onload = function () {
   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
     size: 'normal',
-    callback: (response) => {
-      console.log("reCAPTCHA solved");
-    },
-    'expired-callback': () => {
-      alert("reCAPTCHA expired. Try again.");
-    }
+    callback: () => console.log("reCAPTCHA solved"),
+    'expired-callback': () => alert("reCAPTCHA expired")
   });
-  recaptchaVerifier.render();
 };
 
-function sendOtp() {
-  const phone = document.getElementById('phoneNumber').value;
+// Send OTP
+function sendOTP() {
+  const phoneNumber = "+91" + document.getElementById("phone").value;
   const appVerifier = window.recaptchaVerifier;
 
-  auth.signInWithPhoneNumber(phone, appVerifier)
-    .then(confirmationResult => {
-      window.confirmationResult = confirmationResult;
-      alert("OTP Sent!");
+  firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+    .then(result => {
+      window.confirmationResult = result;
+      alert("OTP sent!");
     })
-    .catch(error => alert(error.message));
+    .catch(error => alert("OTP send failed: " + error.message));
 }
 
-function verifyOtp() {
-  const code = document.getElementById('otpCode').value;
-  window.confirmationResult.confirm(code)
-    .then(result => alert("Phone Login Success!"))
-    .catch(error => alert("OTP Error: " + error.message));
-}
+// Verify OTP
+function verifyOTP() {
+  const otp = document.getElementById("otp").value;
 
-// Google Login
-function googleLogin() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider)
-    .then(result => alert("Google Login Success!"))
-    .catch(error => alert("Google Login Error: " + error.message));
-}
-
-// Facebook Login
-function facebookLogin() {
-  const provider = new firebase.auth.FacebookAuthProvider();
-  auth.signInWithPopup(provider)
-    .then(result => alert("Facebook Login Success!"))
-    .catch(error => alert("Facebook Login Error: " + error.message));
+  window.confirmationResult.confirm(otp)
+    .then(result => {
+      alert("OTP verified! Welcome.");
+      window.location.href = "songs.html";
+    })
+    .catch(error => alert("Invalid OTP"));
 }
