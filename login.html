@@ -24,18 +24,12 @@
       border-radius: 12px;
       width: 90%;
       max-width: 400px;
-      text-align: center;
       box-shadow: 0 0 15px #1ed760;
+      text-align: center;
     }
-    h2 { color: #1ed760; margin-bottom: 20px; }
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 8px;
-      background: #222;
-      color: white;
+    h2 {
+      color: #1ed760;
+      margin-bottom: 20px;
     }
     button {
       width: 90%;
@@ -48,29 +42,56 @@
       font-weight: bold;
       cursor: pointer;
     }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      background: #222;
+      color: white;
+    }
+    .form-section {
+      display: none;
+      margin-top: 20px;
+    }
+    .suggestions {
+      background: #222;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+    .suggestions div {
+      padding: 8px;
+      border-bottom: 1px solid #333;
+      cursor: pointer;
+    }
+    .suggestions div:hover {
+      background: #333;
+    }
     #recaptcha-container {
       margin: 10px 0;
     }
-    .form-section { display: none; }
   </style>
 </head>
 <body>
   <div class="login-box">
     <h2>Login to AMVibe</h2>
+
     <button onclick="toggleForm('emailForm')">Continue with Email</button>
-    <button onclick="toggleForm('phoneForm')">Continue with Phone</button>
+    <button onclick="toggleForm('phoneForm')">Continue with Phone Number</button>
     <button onclick="loginWithGoogle()">Continue with Google</button>
 
-    <!-- Email Login -->
+    <!-- Email form -->
     <div id="emailForm" class="form-section">
-      <input type="email" id="email" placeholder="Email">
+      <input type="text" id="emailInput" placeholder="Enter your email" oninput="showSuggestions(this.value)">
+      <div id="emailSuggestions" class="suggestions"></div>
       <input type="password" id="password" placeholder="Password">
       <button onclick="loginWithEmail()">Login</button>
     </div>
 
-    <!-- Phone Login -->
+    <!-- Phone form -->
     <div id="phoneForm" class="form-section">
-      <input type="text" id="phone" placeholder="Phone number (no +91)">
+      <input type="text" id="phone" placeholder="Phone number (without +91)">
       <div id="recaptcha-container"></div>
       <button onclick="sendOTP()">Send OTP</button>
       <input type="text" id="otp" placeholder="Enter OTP">
@@ -80,9 +101,34 @@
 
   <script>
     function toggleForm(formId) {
-      document.getElementById("emailForm").style.display = "none";
-      document.getElementById("phoneForm").style.display = "none";
-      document.getElementById(formId).style.display = "block";
+      document.getElementById('emailForm').style.display = 'none';
+      document.getElementById('phoneForm').style.display = 'none';
+      document.getElementById(formId).style.display = 'block';
+    }
+
+    const emailList = [
+      "amol949@gmail.com",
+      "amvibeofficial@gmail.com",
+      "demo123@gmail.com",
+      "user2025@gmail.com",
+      "musiclover@gmail.com"
+    ];
+
+    function showSuggestions(query) {
+      const box = document.getElementById("emailSuggestions");
+      box.innerHTML = "";
+      if (query.length < 2) return;
+
+      const matches = emailList.filter(email => email.toLowerCase().includes(query.toLowerCase()));
+      matches.forEach(email => {
+        const div = document.createElement("div");
+        div.textContent = email;
+        div.onclick = () => {
+          document.getElementById("emailInput").value = email;
+          box.innerHTML = "";
+        };
+        box.appendChild(div);
+      });
     }
   </script>
 </body>
