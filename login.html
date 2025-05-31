@@ -58,6 +58,7 @@
     .input-box {
       display: none;
       margin-top: 20px;
+      animation: fadeIn 0.5s ease-in-out;
     }
     input {
       width: 90%;
@@ -76,6 +77,11 @@
       color: #1ed760;
       text-decoration: none;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -89,9 +95,9 @@
     <button class="fb-btn" onclick="facebookLogin()">Continue with Facebook</button>
 
     <div id="emailLogin" class="input-box">
-      <input type="email" placeholder="Email">
-      <input type="password" placeholder="Password">
-      <button class="main-btn">Login</button>
+      <input type="email" placeholder="Email" id="email">
+      <input type="password" placeholder="Password" id="password">
+      <button class="main-btn" onclick="emailLogin()">Login</button>
     </div>
 
     <div class="link">Don't have an account? <a href="#">Sign up</a></div>
@@ -99,7 +105,8 @@
 
   <script>
     function showEmailLogin() {
-      document.getElementById('emailLogin').style.display = 'block';
+      const box = document.getElementById('emailLogin');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
     }
 
     function googleLogin() {
@@ -108,6 +115,13 @@
 
     function facebookLogin() {
       alert('Facebook Login coming soon');
+    }
+
+    function emailLogin() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      alert("Email: " + email + "\nPassword: " + password);
+      // Firebase login logic तुम्ही नंतर इथे लावू शकता.
     }
   </script>
 
