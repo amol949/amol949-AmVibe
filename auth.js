@@ -13,8 +13,11 @@ function loginWithEmail() {
   const password = document.getElementById("password").value;
 
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(() => alert("Email login successful!"))
-    .catch(error => alert("Email login failed: " + error.message));
+  .then(() => {
+    alert("Login successful!");
+    // redirect नाही - याच पेजवर फॉर्म दिसतो
+  })
+  
 }
 function loginWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
