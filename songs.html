@@ -6,50 +6,64 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
   <style>
-    body {
-      background: #121212;
-      color: white;
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
       padding: 20px;
     }
 
     h1 {
-      color: #00ffcc;
       text-align: center;
+      color: #00ffc3;
+      margin-bottom: 20px;
     }
 
     #searchBar {
       display: block;
-      margin: 20px auto;
-      padding: 10px;
+      margin: 0 auto 30px auto;
+      padding: 12px 20px;
       width: 90%;
       max-width: 400px;
-      border-radius: 8px;
       border: none;
+      border-radius: 25px;
       font-size: 16px;
-      background: #1e1e1e;
+      background: #2a2a2a;
       color: white;
+      box-shadow: 0 0 10px rgba(0,255,200,0.2);
     }
 
     .song-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 20px;
-      margin-top: 20px;
     }
 
     .song-card {
-      background: #1e1e1e;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
       padding: 15px;
-      border-radius: 12px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,255,200,0.05);
       text-align: center;
-      box-shadow: 0 0 10px rgba(0,255,200,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .song-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0,255,200,0.15);
     }
 
     .song-card img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
+      transition: 0.3s ease;
     }
 
     .song-card h3 {
@@ -58,19 +72,20 @@
     }
 
     .song-card p {
-      margin: 0 0 10px;
-      color: #aaa;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #ccc;
     }
 
     audio {
       width: 100%;
-      outline: none;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
-  <h1>🎵 AMVibe Songs</h1>
-  <input type="text" id="searchBar" placeholder="Search songs...">
+  <h1>🎶 AMVibe Music Library</h1>
+  <input type="text" id="searchBar" placeholder="Search by song or artist">
   <div class="song-container" id="songsList">Loading songs...</div>
 
   <script>
@@ -86,13 +101,17 @@
 
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.database(app);
-
     const songsList = document.getElementById('songsList');
     const searchBar = document.getElementById('searchBar');
     let allSongs = [];
 
     function renderSongs(filteredSongs) {
       songsList.innerHTML = "";
+      if (filteredSongs.length === 0) {
+        songsList.innerHTML = "<p style='text-align:center;color:#888;'>No songs found.</p>";
+        return;
+      }
+
       filteredSongs.forEach(song => {
         const card = `
           <div class="song-card">
@@ -104,20 +123,16 @@
         `;
         songsList.innerHTML += card;
       });
-
-      if (filteredSongs.length === 0) {
-        songsList.innerHTML = "<p style='text-align:center;color:gray;'>No songs found.</p>";
-      }
     }
 
-    // Load from Firebase
+    // Fetch songs from Firebase
     db.ref("songs").once("value").then(snapshot => {
       const data = snapshot.val();
       allSongs = Object.values(data);
       renderSongs(allSongs);
     });
 
-    // Search logic
+    // Filter songs on search
     searchBar.addEventListener("input", () => {
       const query = searchBar.value.toLowerCase();
       const filtered = allSongs.filter(song =>
@@ -129,4 +144,3 @@
   </script>
 </body>
 </html>
-
